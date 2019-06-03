@@ -1,3 +1,6 @@
+require_relative 'Service_New'
+
+
 class DshsData
     include Singleton
     attr_reader :services
@@ -164,7 +167,11 @@ class DshsData
 
     def get_service_by_name(service_name)
         @service.each do |service|
-            return service if service.name == service_name
+            if service.name == service_name
+                return service
+            else
+                return nil
+            end
         end
     end
 end
