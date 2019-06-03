@@ -24,7 +24,7 @@ def create_app
     prompt = TTY::Prompt.new
 
     # get services and service providers
-    service_names = DshsData.instance.services.keys
+    service_names = DshsData.instance.get_all_service_names
     service_provider_names = DshsData.instance.service_providers.keys
 
     # client name?
@@ -32,7 +32,7 @@ def create_app
 
     # which service?
     user_service = prompt.select("Which service are you making an appointment for?", service_names, cycle: true)
-    service_length = DshsData.instance.services[user_service]['length']
+    service_length = DshsData.instance.get_service_by_name.duration
 
     # which service provider? only allow user to select from service providers that offer the specified service
     possible_service_providers = []
@@ -130,7 +130,7 @@ def create_app
         should_continue = false
         DshsData.instance.appointments.each do |app|
             if (!is_recurring && app['date'] == user_date && app['service_provider_name'] == user_sp) || (is_recurring && convert_date_to_day(app['date']) == user_day)
-                if user_time >= app['start_time'] && user_time < (app['start_time'] + DshsData.instance.services[app['service_name']]['length'])
+                if user_time >= app['start_time'] && user_time < (app['start_time'] + DshsData.instance.get_service_by_name(app['service_name']).duration)
                     puts 'The service provider you requested already has an appointment at this time.'.red
                     puts 'Please choose a different date/time or \'q\' to quit.'.red
                     should_continue = true

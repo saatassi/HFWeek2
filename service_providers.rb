@@ -9,7 +9,7 @@ def prompt_add_sp
     phone_in = prompt.ask('Phone #:')
 
     # which services are provided?
-    services_in = prompt.multi_select('Services provided:', DshsData.instance.services.keys)
+    services_in = prompt.multi_select('Services provided:', DshsData.instance.get_all_service_names)
 
     # check availability
     availability_in = {

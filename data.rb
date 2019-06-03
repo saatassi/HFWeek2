@@ -1,26 +1,15 @@
 class DshsData
     include Singleton
+    attr_reader :services
 
     def initialize
         # will be initialized with sample data, see data_structure
-        @services = {
-            "mind reading" => {
-                "price" => 3,
-                "length" => 2
-            },
-            "demonic exorcism" => {
-                "price" => 4,
-                "length" => 4
-            },
-            "potion therapy" => {
-                "price" => 1,
-                "length" => 3
-            },
-            "liver transplants" => {
-                "price" => 2,
-                "length" => 1
-            }
-        }
+        @services = [
+            Service.new("mind reading", 3, 2),
+            Service.new("demonic exorcism", 4, 4),
+            Service.new("potion therapy", 1, 3),
+            Service.new("liver transplants", 2, 1)
+        ]
         @service_providers = {
             "jon" => {
                 "phone" => 1234567890,
@@ -166,5 +155,19 @@ class DshsData
         remove_instance_variable(name) #hopefully gets rid of the entire object
         puts @availability_blocks.inspect.yellow
         # print_availability_blocks()
+    end
+
+    def get_all_service_names
+        service_names = []
+        @service.each do |service|
+            service_names.push(service.name)
+        end
+        service_names
+    end
+
+    def get_service_by_name(service_name)
+        @service.each do |service|
+            return service if service.name == service_name
+        end
     end
 end

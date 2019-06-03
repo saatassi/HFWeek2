@@ -2,9 +2,8 @@ def print_services
     puts
     puts 'SERVICES:'
     puts '---------'
-    services = DshsData.instance.services.keys
-    services.each do |serv|
-        puts serv + '  ---  price: ' + DshsData.instance.services[serv]['price'].to_s + ' , length: ' + DshsData.instance.services[serv]['length'].to_s
+    DshsData.instance.services.each do |serv|
+        puts serv.name + '  ---  price: ' + serv.price.to_s + ' , length: ' + serv.duration.to_s
     end
     puts
 end

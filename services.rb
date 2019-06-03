@@ -1,13 +1,12 @@
 require 'tty-prompt'
 
-
 def prompt_add_serv
     prompt = TTY::Prompt.new
 
     name_is_valid = false
     while !name_is_valid do
         name_in = prompt.ask('Service name:')
-        if DshsData.instance.services[name_in] == nil
+        if DshsData.instance.get_service_by_name(name_in) == nil
             name_is_valid = true
         else
             puts 'That service already exists! Please choose a different name.'.red
@@ -26,7 +25,7 @@ def prompt_remove_serv
     name_is_valid = false
     while !name_is_valid do
         name_in = prompt.ask('Service name:')
-        if DshsData.instance.services[name_in] != nil
+        if DshsData.instance.get_service_by_name(name_in) != nil
             name_is_valid = true
         else
             puts 'That service does not exist! Please choose a different name.'.red
