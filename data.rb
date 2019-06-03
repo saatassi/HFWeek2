@@ -80,12 +80,9 @@ class DshsData
 
     attr_accessor :services, :service_providers, :appointments, :availability_blocks
 
-    def add_service(name, price, length)
+    def add_service(name, price, duration)
         # code to add a service to services dictionary
-        services[name] = {
-            "price" => price,
-            "length" => length
-        }
+        @services.push(Service.new(name,price,duration))
         puts "#{name} has successfully been added to services!".colorize(:green ).colorize( :background => :black)
 
         print_services()
@@ -93,7 +90,7 @@ class DshsData
 
     def remove_service(name)
         # code to remove a service from services dictionary
-        services.delete(name)
+        services.delete(get_service_by_name(name))
         puts "#{name} has successfully been removed from services".colorize(:green ).colorize( :background => :black)
 
         print_services()
@@ -129,7 +126,7 @@ class DshsData
             "client_name" => client_name
         }
         @appointments << app_new
-        puts 'Your appoinment has been scheduled!'.colorize(:green ).colorize( :background => :black)
+        puts 'Your appointment has been scheduled!'.colorize(:green ).colorize( :background => :black)
 
         print_appointments()
     end
