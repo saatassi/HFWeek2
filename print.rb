@@ -12,9 +12,9 @@ def print_service_providers
     puts
     puts 'SERVICE PROVIDERS:'
     puts '------------------'
-    service_providers = DshsData.instance.service_providers.keys
+    service_providers = DshsData.instance.service_providers
     service_providers.each do |sp|
-        puts sp + '  ---  services: ' + DshsData.instance.service_providers[sp]['services'].inspect
+        puts sp + '  ---  services: ' +  sp.name #DshsData.instance.service_providers[sp]['services'].inspect
     end
     puts
 end

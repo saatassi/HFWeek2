@@ -204,14 +204,14 @@ class DshsData
 
     def get_all_service_names
         service_names = []
-        @service.each do |service|
+        DshsData.instance.services.each do |service|
             service_names.push(service.name)
         end
         service_names
     end
 
     def get_service_by_name(service_name)
-        @service.each do |service|
+        DshsData.instance.services.each do |service|
             if service.name == service_name
                 return service
             else
