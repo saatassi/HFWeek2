@@ -1,5 +1,6 @@
 require_relative 'Service_New'
 require_relative 'ServiceProvider_New'
+require_relative 'Appointments_New'
 
 
 class DshsData
@@ -91,14 +92,19 @@ class DshsData
         #     }
         # }
         @appointments = [
-            {
-                "date" => 18235,
-                "start_time" => 9,
-                "service_name" => "mind reading",
-                "client_name" => "petyr baelish",
-                "service_provider_name" => "arya",
-            }
+            Appointment.new(18235, 9, 'mind reading', 'petyr baelish', 'arya')
         ]
+
+        # Old appointment initialization
+        # @appointments = [
+        #     {
+        #         "date" => 18235,
+        #         "start_time" => 9,
+        #         "service_name" => "mind reading",
+        #         "client_name" => "petyr baelish",
+        #         "service_provider_name" => "arya",
+        #     }
+        # ]
         @availability_blocks = [
             {
                 "service_provider_name" => "arya",
@@ -173,18 +179,22 @@ class DshsData
     end
 
     def create_appointment(date, start_time, service_name, service_provider_name, client_name)
-        # code to add an appointment to the appointments array
-        app_new = {
-            "date" => date,
-            "start_time" => start_time,
-            "service_name" => service_name,
-            "service_provider_name" => service_provider_name,
-            "client_name" => client_name
-        }
-        @appointments << app_new
+        # Old code
+        # # code to add an appointment to the appointments array
+        # app_new = {
+        #     "date" => date,
+        #     "start_time" => start_time,
+        #     "service_name" => service_name,
+        #     "service_provider_name" => service_provider_name,
+        #     "client_name" => client_name
+        # }
+        # @appointments << app_new
+        # puts 'Your appointment has been scheduled!'.colorize(:green ).colorize( :background => :black)
+        #
+        # print_appointments()
+        @appointments.push(Appointment.new(date,start_time, service_name, client_name, service_provider_name))
         puts 'Your appointment has been scheduled!'.colorize(:green ).colorize( :background => :black)
-
-        print_appointments()
+        print_appointments
     end
 
     def add_availability(name, date, start_time, end_time, is_available)
@@ -218,13 +228,20 @@ class DshsData
         service_names
     end
 
+    def get_all_service_provider_names
+        service_provider_names = []
+        DshsData.instance.service_providers.each do |service|
+            service_provider_names.push(service.name)
+        end
+        service_provider_names
+    end
+
     def get_service_by_name(service_name)
         DshsData.instance.services.each do |service|
             if service.name == service_name
                 return service
-            else
-                return nil
             end
         end
+        nil
     end
 end
