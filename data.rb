@@ -144,13 +144,21 @@ class DshsData
         #     "availability" => availability
         # }
 
+        has_been_found = false
         DshsData.instance.service_providers.each do |service_provider|
             if service_provider.name == name
-                puts "#{name} has successfully been added to service providers!".colorize(:green ).colorize( :background => :black)
+                puts "#{name} Provider of that name already added, try another.".colorize(:green ).colorize( :background => :black)
+                has_been_found = true
             else
-                new_provider = ServiceProvider.new(name, phone, services, availability)
-                DshsData.instance.service_providers.push(new_provider)
+                next
             end
+        end
+
+
+        if has_been_found == false
+            new_provider = ServiceProvider.new(name, phone, services, availability)
+            DshsData.instance.service_providers.push(new_provider)
+            puts "#{name} has successfully been added to service providers!".colorize(:green ).colorize( :background => :black)
         end
 
         print_service_providers()

@@ -14,7 +14,7 @@ def print_service_providers
     puts '------------------'
     service_providers = DshsData.instance.service_providers
     service_providers.each do |sp|
-        puts sp + '  ---  services: ' +  sp.name #DshsData.instance.service_providers[sp]['services'].inspect
+        puts sp.name #DshsData.instance.service_providers[sp]['services'].inspect
     end
     puts
 end
