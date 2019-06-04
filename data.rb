@@ -137,13 +137,21 @@ class DshsData
 
     def add_service_provider(name, phone, services, availability)
         # code to add a service provider to service_providers dictionary
-        # TO DO 6/3/2019 - NEW GROUP
-        service_providers[name] = {
-            "phone" => phone,
-            "services" => services,
-            "availability" => availability
-        }
-        puts "#{name} has successfully been added to service providers!".colorize(:green ).colorize( :background => :black)
+        # old code
+        # service_providers[name] = {
+        #     "phone" => phone,
+        #     "services" => services,
+        #     "availability" => availability
+        # }
+
+        DshsData.instance.service_providers.each do |service_provider|
+            if service_provider.name == name
+                puts "#{name} has successfully been added to service providers!".colorize(:green ).colorize( :background => :black)
+            else
+                new_provider = ServiceProvider.new(name, phone, services, availability)
+                DshsData.instance.service_providers.push(new_provider)
+            end
+        end
 
         print_service_providers()
     end
