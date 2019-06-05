@@ -1,6 +1,7 @@
 require_relative 'Service_New'
 require_relative 'ServiceProvider_New'
 require_relative 'Appointments_New'
+require_relative 'AvailabilityBlock_New'
 
 
 class DshsData
@@ -106,6 +107,13 @@ class DshsData
         #     }
         # ]
         @availability_blocks = [
+                AvailabilityBlock.new("arya", 18236, 0,7, false),
+                AvailabilityBlock.new("arya", 18237, 0, 3, true)
+        ]
+
+=begin
+Old availability
+        @availability_blocks = [
             {
                 "service_provider_name" => "arya",
                 "date" => 18236,
@@ -121,6 +129,7 @@ class DshsData
                 "is_available" => true,
             }
         ]
+=end
     end
 
     attr_accessor :services, :service_providers, :appointments, :availability_blocks
@@ -192,21 +201,14 @@ class DshsData
         # puts 'Your appointment has been scheduled!'.colorize(:green ).colorize( :background => :black)
         #
         # print_appointments()
-        @appointments.push(Appointment.new(date,start_time, service_name, client_name, service_provider_name))
+        DshsData.instance.appointments.push(Appointment.new(date,start_time, service_name, client_name, service_provider_name))
         puts 'Your appointment has been scheduled!'.colorize(:green ).colorize( :background => :black)
         print_appointments
     end
 
     def add_availability(name, date, start_time, end_time, is_available)
-        app_new = {
-            "name" => name,
-            "date" => date,
-            "start_time" => start_time,
-            "end_time" => end_time,
-            "is_available" => is_available,
-        }
-        @availability_blocks << app_new
-        puts @availability_blocks.inspect.yellow
+        app_new = AvailabilityBlock.new(name, date, start_time,end_time, is_available)
+        availability_blocks.push(app_new)
         # print_availability_blocks()
     end
 
