@@ -32,20 +32,26 @@ def create_app
     user_name = prompt.ask("What is your name?")
 
     # which service?
-    user_service = prompt.select("Which service are you making an appointment for?", service_names, cycle: true)
-    service_length = DshsData.instance.get_service_by_name(user_service).duration.to_i
-    user_service_object = DshsData.instance.get_service_by_name(user_service)
+    user_service_name = prompt.select("Which service are you making an appointment for?", service_names, cycle: true)
+    service_length = DshsData.instance.get_service_by_name(user_service_name).duration.to_i
+    user_service_object = DshsData.instance.get_service_by_name(user_service_name)
 
-    # which service provider? only allow user to select from service providers that offer the specified service
-    puts('here')
-    possible_service_providers = []
-    service_provider_names.each do |sp|
-        if DshsData.instance.service_providers.include? user_service_object
-            possible_service_providers << sp
-        end
+    #which service provider? only allow user to select from service providers that offer the specified service
+    # puts('here')
+    # possible_service_providers = []
+    # service_provider_names.each do |sp|
+    #     if DshsData.instance.service_providers.include? user_service_object
+    #         possible_service_providers << sp
+    #     end
+    # end
+
+    possible_service_providers = DshsData.instance.get_service_providers_that_offer_service(user_service_name)
+    possible_service_provider_names = []
+    possible_service_providers.each do |sp|
+        possible_service_provider_names.push(sp.name)
     end
 
-    user_sp = prompt.select("Which service provider are you making an appointment with?", possible_service_providers, cycle: true)
+    user_sp = prompt.select("Which service provider are you making an appointment with?", possible_service_provider_names, cycle: true)
 
     # determine whether this appointment is recurring or one-off
     recurring_or_one_off = prompt.select("Is this a recurring (weekly) appointment? Or a one-off appointment?", ['recurring', 'one-off'], cycle: true)

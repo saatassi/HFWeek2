@@ -254,4 +254,25 @@ Old availability
             end
         end
     end
+
+    def get_services_by_service_provider(service_provider_name)
+        services = []
+        service_provider = get_all_service_provider_by_name(service_provider_name)
+        service_provider.services.each do |service|
+            services.push(service)
+        end
+        return services
+    end
+
+    def get_service_providers_that_offer_service(service_name)
+        list_of_service_providers_that_offer_service = []
+        service = get_service_by_name(service_name)
+        service_providers_list = DshsData.instance.service_providers
+        service_providers_list.each do |sp|
+            if sp.services.include? service
+                list_of_service_providers_that_offer_service.push(sp)
+            end
+        end
+        return list_of_service_providers_that_offer_service
+    end
 end
