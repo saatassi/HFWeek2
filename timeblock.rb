@@ -1,8 +1,10 @@
 
 class Timeblock
-  attr_accessor :start_datetime, :length
-  def initialize(start_datetime, length)
+  attr_accessor :start_datetime, :duration
+
+  def initialize(start_datetime, duration)
     @start_datetime = start_datetime
-    @length = length
+    @duration = duration
   end
+
 end

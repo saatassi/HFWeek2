@@ -246,4 +246,12 @@ Old availability
         end
         nil
     end
+
+    def get_service_provider_by_name(service_provider_name)
+        DshsData.instance.service_providers.each do |sp|
+            if service_provider_name == sp.name
+                return sp
+            end
+        end
+    end
 end

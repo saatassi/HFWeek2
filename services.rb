@@ -6,17 +6,12 @@ def prompt_add_serv
     name_is_valid = false
     while !name_is_valid do
         name_in = prompt.ask('Service name:')
-        begin
-            DshsData.instance.services.each do |service|
-                if service.name == name_in
-                    puts 'That service already exists! Please choose a different name.'
-                else
-                    name_is_valid = true
-                end
+        DshsData.instance.services.each do |service|
+            if service.name == name_in
+                puts 'That service already exists! Please choose a different name.'
+            else
+                name_is_valid = true
             end
-        rescue
-            puts 'That service already exists! Please choose a different name.'.red
-        ensure
         end
     end
 

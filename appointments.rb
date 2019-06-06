@@ -26,20 +26,21 @@ def create_app
     # get services and service providers
     service_names = DshsData.instance.get_all_service_names
 
-    #NEED TO FIX NEW GROUP 6/5/2019
-    service_provider_names = DshsData.instance.service_providers.keys
+    service_provider_names = DshsData.instance.get_all_service_provider_names
 
     # client name?
     user_name = prompt.ask("What is your name?")
 
     # which service?
     user_service = prompt.select("Which service are you making an appointment for?", service_names, cycle: true)
-    service_length = DshsData.instance.get_service_by_name.duration
+    service_length = DshsData.instance.get_service_by_name(user_service).duration.to_i
+    user_service_object = DshsData.instance.get_service_by_name(user_service)
 
     # which service provider? only allow user to select from service providers that offer the specified service
+    puts('here')
     possible_service_providers = []
     service_provider_names.each do |sp|
-        if DshsData.instance.service_providers[sp]['services'].include? user_service
+        if DshsData.instance.service_providers.include? user_service_object
             possible_service_providers << sp
         end
     end
