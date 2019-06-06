@@ -107,8 +107,8 @@ class DshsData
         #     }
         # ]
         @availability_blocks = [
-                AvailabilityBlock.new("arya", 18236, 0,7, false),
-                AvailabilityBlock.new("arya", 18237, 0, 3, true)
+                AvailabilityBlock.new("arya", 18236, 0,7, false, 0),
+                AvailabilityBlock.new("arya", 18237, 0, 3, true, 0)
         ]
 
 =begin
@@ -168,7 +168,6 @@ Old availability
                 next
             end
         end
-
 
         if has_been_found == false
             new_provider = ServiceProvider.new(name, phone, services, availability)

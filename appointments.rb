@@ -25,6 +25,8 @@ def create_app
 
     # get services and service providers
     service_names = DshsData.instance.get_all_service_names
+
+    #NEED TO FIX NEW GROUP 6/5/2019
     service_provider_names = DshsData.instance.service_providers.keys
 
     # client name?
