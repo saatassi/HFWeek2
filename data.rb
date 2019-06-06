@@ -2,7 +2,8 @@ require_relative 'Service_New'
 require_relative 'ServiceProvider_New'
 require_relative 'Appointments_New'
 require_relative 'AvailabilityBlock_New'
-
+require 'singleton'
+require 'colorize'
 
 class DshsData
     include Singleton
@@ -136,18 +137,18 @@ Old availability
 
     def add_service(name, price, duration)
         # code to add a service to services dictionary
-        @services.push(Service.new(name,price,duration))
+        DshsData.instance.services.push(Service.new(name,price,duration))
         puts "#{name} has successfully been added to services!".colorize(:green ).colorize( :background => :black)
 
-        print_services()
+        #print_services
     end
 
     def remove_service(name)
         # code to remove a service from services dictionary
-        services.delete(get_service_by_name(name))
+        DshsData.instance.services.delete(get_service_by_name(name))
         puts "#{name} has successfully been removed from services".colorize(:green ).colorize( :background => :black)
 
-        print_services()
+        #print_services
     end
 
     def add_service_provider(name, phone, services, availability)
@@ -180,7 +181,7 @@ Old availability
 
     def remove_service_provider(name)
         # code to remove a service provider from service_providers dictionary
-        service_providers.delete(name)
+        DshsData.instance.service_providers.delete(name)
         puts "#{name} has successfully been removed from service providers".colorize(:green ).colorize( :background => :black)
 
         print_service_providers()
