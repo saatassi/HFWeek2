@@ -176,7 +176,7 @@ Old availability
             puts "#{name} has successfully been added to service providers!".colorize(:green ).colorize( :background => :black)
         end
 
-        print_service_providers()
+        # print_service_providers()
     end
 
     def remove_service_provider(name)
@@ -184,7 +184,7 @@ Old availability
         DshsData.instance.service_providers.delete(name)
         puts "#{name} has successfully been removed from service providers".colorize(:green ).colorize( :background => :black)
 
-        print_service_providers()
+        # print_service_providers()
     end
 
     def create_appointment(date, start_time, service_name, service_provider_name, client_name)
