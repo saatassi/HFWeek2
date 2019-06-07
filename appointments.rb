@@ -104,16 +104,18 @@ def create_app
         # check for conflicts in service_provider's availability blocks
         should_continue = false
         base_availability_override = false
+        puts 'check for conflicts'
         DshsData.instance.availability_blocks.each do |av|
-            if (!is_recurring && av['date'] == user_date && av['service_provider_name'] == user_sp) || (is_recurring && convert_date_to_day(av['date']) == user_day)
-                if user_time >= av['start_time'] && user_time < av['end_time']
-                    if av['is_available'] && !is_recurring
+            puts 'inside block'
+            if (!is_recurring && av.date == user_date && av.service_provider_name == user_sp) || (is_recurring && convert_date_to_day(av.date) == user_day)
+                if user_time >= av.start_time && user_time < av.end_time
+                    if av.is_available && !is_recurring
                         # the override flag is set to denote that availability blocks take
                         # precedence over base availability - this is used when checking
                         # for conflicts in the service_provider's base availability
                         base_availability_override = true
                         break
-                    elsif av['is_available'] && is_recurring
+                    elsif av.is_available && is_recurring
                         next
                     else
                         puts 'The service provider you requested is not available at this time.'.red
@@ -129,7 +131,8 @@ def create_app
         next if should_continue
 
         # check for conflicts in service_provider's base availability
-        if !DshsData.instance.service_providers[user_sp]['availability'][user_day][user_time] && !base_availability_override
+        puts(DshsData.instance.service_providers)
+        if !DshsData.instance.service_providers[user_sp]['availability'[user_day][user_time] && !base_availability_override
             puts 'The service provider you requested is not available at this time.'.red
             puts 'Please choose a different date/time or \'q\' to quit.'.red
             next
